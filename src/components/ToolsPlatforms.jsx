@@ -1,5 +1,7 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
 import { motion } from 'framer-motion';
+import React from 'react';
+
 
 const platforms = [
   { name: 'Midjourney & Stable Diffusion', use: 'Concept Ideation' },

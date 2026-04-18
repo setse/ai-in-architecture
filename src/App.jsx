@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.css';
 
 // Components
@@ -11,23 +11,31 @@ import BenefitsChallenges from './components/BenefitsChallenges';
 import Future from './components/Future';
 import CallToAction from './components/CallToAction';
 import Footer from './components/Footer';
+import RoboticAssembly from './components/RoboticAssembly';
 
 function App() {
+  const [showAssembly, setShowAssembly] = useState(false);
   useEffect(() => {
     document.title = "AI in Architecture";
   }, []);
 
   return (
     <>
-      <Hero />
+      {showAssembly ? (
+        <RoboticAssembly onClose={() => setShowAssembly(false)} />
+      ) : (
+        <>
+          <Hero onOpenAssembly={() => setShowAssembly(true)} />
       <Introduction />
       <KeyTopics />
       <ToolsPlatforms />
       <CaseStudies />
       <BenefitsChallenges />
       <Future />
-      <CallToAction />
-      <Footer />
+          <CallToAction onOpenAssembly={() => setShowAssembly(true)} />
+          <Footer />
+        </>
+      )}
     </>
   );
 }

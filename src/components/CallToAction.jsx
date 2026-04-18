@@ -1,7 +1,9 @@
-import React from 'react';
+/* eslint-disable no-unused-vars */
 import { motion } from 'framer-motion';
+import React from 'react';
 
-export default function CallToAction() {
+
+export default function CallToAction({ onOpenAssembly }) {
   return (
     <section>
       <div className="container">
@@ -19,7 +21,7 @@ export default function CallToAction() {
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <button className="cta-button">View Documentation</button>
-            <button className="cta-button secondary">Join the Beta</button>
+            <button className="cta-button" onClick={onOpenAssembly}>View 3D Assembly Demo</button>
           </div>
         </motion.div>
       </div>

@@ -1,7 +1,8 @@
+import { motion } from 'framer-motion';
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, MeshDistortMaterial, Float } from '@react-three/drei';
-import { motion } from 'framer-motion';
+
 import { ArrowRight } from 'lucide-react';
 import '../index.css';
 
@@ -31,7 +32,7 @@ function InteractiveCube() {
   );
 }
 
-export default function Hero() {
+export default function Hero({ onOpenAssembly }) {
   return (
     <header className="container" style={{
       minHeight: '100vh',
@@ -69,12 +70,22 @@ export default function Hero() {
         <p style={{ fontSize: '1.25rem', color: 'var(--text-muted)', marginBottom: '2.5rem' }}>
           Artificial intelligence is reshaping the built environment. From generative floor plans to optimized structural analysis, computational power is unlocking a new era of sustainable and visionary architecture.
         </p>
-        <button 
-          className="cta-button" 
-          onClick={() => document.getElementById('introduction').scrollIntoView({ behavior: 'smooth' })}
-        >
-          Explore AI Workflows <ArrowRight size={20} />
-        </button>
+        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+          <button 
+            className="cta-button" 
+            onClick={() => document.getElementById('introduction').scrollIntoView({ behavior: 'smooth' })}
+          >
+            Explore AI Workflows <ArrowRight size={20} />
+          </button>
+          {onOpenAssembly && (
+            <button 
+              className="cta-button secondary" 
+              onClick={onOpenAssembly}
+            >
+              View 3D Assembly Demo
+            </button>
+          )}
+        </div>
       </motion.div>
 
       <motion.div 
