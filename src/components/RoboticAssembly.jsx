@@ -11,7 +11,8 @@ const RoboticAssembly = ({ onClose }) => {
     const [depth, setDepth] = useState(1.8);
     const [tabScale, setTabScale] = useState(1.0);
     const [isTesting, setIsTesting] = useState(false);
-    const [panelOpen, setPanelOpen] = useState(true);
+    const [panelOpen, setPanelOpen] = useState(false);
+    const [showHint, setShowHint] = useState(false);
 
     const stateRef = useRef({
         currentProgress: 0,
@@ -22,6 +23,13 @@ const RoboticAssembly = ({ onClose }) => {
         testProgress: 0,
         updateDimensions: null
     });
+
+    // Show hint bubble after 3s, auto-hide after 6s more
+    useEffect(() => {
+        const showTimer = setTimeout(() => setShowHint(true), 3000);
+        const hideTimer = setTimeout(() => setShowHint(false), 9000);
+        return () => { clearTimeout(showTimer); clearTimeout(hideTimer); };
+    }, []);
 
     useEffect(() => {
         const currentMount = mountRef.current;
@@ -361,7 +369,10 @@ const RoboticAssembly = ({ onClose }) => {
                     <h1>Synchronous Multi-Robot Assembly</h1>
                     <button
                         className="panel-toggle"
-                        onClick={() => setPanelOpen(o => !o)}
+                        onClick={() => {
+                            setPanelOpen(o => !o);
+                            setShowHint(false);
+                        }}
                         aria-label={panelOpen ? 'Collapse panel' : 'Expand panel'}
                     >
                         {panelOpen ? '▲' : '▼'}
@@ -413,6 +424,13 @@ const RoboticAssembly = ({ onClose }) => {
                     )}
                 </div>
             </div>
+
+            {/* Hint bubble – outside ui-panel so it's never clipped */}
+            {showHint && !panelOpen && (
+                <div className="hint-bubble" onClick={() => setShowHint(false)}>
+                    ⚙️ Tap <strong>▼</strong> to adjust beam thickness, interlock size &amp; more!
+                </div>
+            )}
 
             {/* Floating animate button – mobile only, visible when panel is collapsed */}
             {!panelOpen && (
