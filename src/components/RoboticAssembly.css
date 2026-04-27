@@ -169,6 +169,47 @@
     z-index: 1000;
 }
 
+/* ── Floating Animate Button (FAB) ── */
+/* Hidden on desktop; media query below overrides to flex on mobile */
+.robotic-assembly-page .fab-animate {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 20px;
+    z-index: 10000;
+    align-items: center;
+    gap: 6px;
+    width: auto;
+    padding: 14px 22px;
+    background: #d28c3a;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 700;
+    box-shadow: 0 6px 20px rgba(210, 140, 58, 0.55);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    animation: fab-pulse 2.5s ease-in-out infinite;
+}
+
+.robotic-assembly-page .fab-animate:hover {
+    background: #b8751f;
+    transform: scale(1.05);
+    animation: none;
+}
+
+.robotic-assembly-page .fab-animate:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    animation: none;
+}
+
+@keyframes fab-pulse {
+    0%, 100% { box-shadow: 0 6px 20px rgba(210, 140, 58, 0.55); }
+    50%       { box-shadow: 0 8px 28px rgba(210, 140, 58, 0.85); }
+}
+
 /* ─────────────────────────────────────────
    Mobile overrides  (≤ 600 px)
 ───────────────────────────────────────── */
@@ -177,13 +218,12 @@
         top: 10px;
         left: 10px;
         right: 10px;
-        width: auto;          /* fill horizontal space */
+        width: auto;
         padding: 12px 14px;
         max-height: 80vh;
         border-radius: 10px;
     }
 
-    /* Show the toggle button on mobile */
     .robotic-assembly-page .panel-toggle {
         display: block;
     }
@@ -228,50 +268,8 @@
         text-align: center;
     }
 
-    /* Show the FAB on mobile */
+    /* Show the FAB — overrides the display:none above */
     .robotic-assembly-page .fab-animate {
         display: flex;
     }
 }
-
-/* ── Floating Animate Button (FAB) ── */
-/* Hidden on desktop, shown on mobile via media query above */
-.robotic-assembly-page .fab-animate {
-    display: none;
-    position: fixed;
-    bottom: 24px;
-    right: 20px;
-    z-index: 10000;
-    align-items: center;
-    gap: 6px;
-    width: auto;
-    padding: 14px 22px;
-    background: #d28c3a;
-    color: #fff;
-    border: none;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 700;
-    box-shadow: 0 6px 20px rgba(210, 140, 58, 0.55);
-    cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
-    animation: fab-pulse 2.5s ease-in-out infinite;
-}
-
-.robotic-assembly-page .fab-animate:hover {
-    background: #b8751f;
-    transform: scale(1.05);
-    animation: none;
-}
-
-.robotic-assembly-page .fab-animate:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    animation: none;
-}
-
-@keyframes fab-pulse {
-    0%, 100% { box-shadow: 0 6px 20px rgba(210, 140, 58, 0.55); }
-    50%       { box-shadow: 0 8px 28px rgba(210, 140, 58, 0.85); }
-}
-
