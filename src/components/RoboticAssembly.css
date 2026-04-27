@@ -18,6 +18,7 @@
     display: block;
 }
 
+/* ── Panel ── */
 .robotic-assembly-page #ui-panel {
     position: absolute;
     top: 20px;
@@ -33,6 +34,44 @@
     color: #1a1a1a;
 }
 
+/* Panel header row (title + collapse toggle) */
+.robotic-assembly-page .panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+/* Collapse toggle – only visible on mobile */
+.robotic-assembly-page .panel-toggle {
+    display: none;
+    background: #3a3a3a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    flex-shrink: 0;
+    width: auto;
+    margin: 0;
+}
+
+/* Panel body – collapsible */
+.robotic-assembly-page .panel-body {
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.3s ease;
+    max-height: 1000px;
+    opacity: 1;
+}
+.robotic-assembly-page .panel-body.collapsed {
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ── Typography ── */
 .robotic-assembly-page h1 {
     font-size: 1.4rem;
     margin-top: 0;
@@ -54,6 +93,7 @@
     font-weight: 600;
 }
 
+/* ── Controls ── */
 .robotic-assembly-page .controls {
     background: #f5f5f5;
     padding: 15px;
@@ -128,3 +168,110 @@
     pointer-events: none;
     z-index: 1000;
 }
+
+/* ─────────────────────────────────────────
+   Mobile overrides  (≤ 600 px)
+───────────────────────────────────────── */
+@media (max-width: 600px) {
+    .robotic-assembly-page #ui-panel {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        width: auto;          /* fill horizontal space */
+        padding: 12px 14px;
+        max-height: 80vh;
+        border-radius: 10px;
+    }
+
+    /* Show the toggle button on mobile */
+    .robotic-assembly-page .panel-toggle {
+        display: block;
+    }
+
+    .robotic-assembly-page h1 {
+        font-size: 1rem;
+        margin-bottom: 0;
+    }
+
+    .robotic-assembly-page p {
+        font-size: 0.78rem;
+        margin-bottom: 10px;
+    }
+
+    .robotic-assembly-page .controls {
+        padding: 10px;
+    }
+
+    .robotic-assembly-page label {
+        font-size: 0.78rem;
+        margin-bottom: 4px;
+    }
+
+    .robotic-assembly-page input[type=range] {
+        margin-bottom: 10px;
+    }
+
+    .robotic-assembly-page button {
+        padding: 8px;
+        font-size: 0.85rem;
+    }
+
+    .robotic-assembly-page .paper-ref {
+        font-size: 0.68rem;
+    }
+
+    .robotic-assembly-page #collision-warning {
+        font-size: 0.85rem;
+        padding: 10px 16px;
+        bottom: 16px;
+        width: 90%;
+        text-align: center;
+    }
+
+    /* Show the FAB on mobile */
+    .robotic-assembly-page .fab-animate {
+        display: flex;
+    }
+}
+
+/* ── Floating Animate Button (FAB) ── */
+/* Hidden on desktop, shown on mobile via media query above */
+.robotic-assembly-page .fab-animate {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 20px;
+    z-index: 10000;
+    align-items: center;
+    gap: 6px;
+    width: auto;
+    padding: 14px 22px;
+    background: #d28c3a;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 700;
+    box-shadow: 0 6px 20px rgba(210, 140, 58, 0.55);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    animation: fab-pulse 2.5s ease-in-out infinite;
+}
+
+.robotic-assembly-page .fab-animate:hover {
+    background: #b8751f;
+    transform: scale(1.05);
+    animation: none;
+}
+
+.robotic-assembly-page .fab-animate:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    animation: none;
+}
+
+@keyframes fab-pulse {
+    0%, 100% { box-shadow: 0 6px 20px rgba(210, 140, 58, 0.55); }
+    50%       { box-shadow: 0 8px 28px rgba(210, 140, 58, 0.85); }
+}
+

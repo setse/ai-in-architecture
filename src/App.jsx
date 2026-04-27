@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import './index.css';
 
 // Components
@@ -13,30 +14,42 @@ import CallToAction from './components/CallToAction';
 import Footer from './components/Footer';
 import RoboticAssembly from './components/RoboticAssembly';
 
-function App() {
-  const [showAssembly, setShowAssembly] = useState(false);
+function MainSite() {
+  const navigate = useNavigate();
   useEffect(() => {
-    document.title = "AI in Architecture";
+    document.title = 'AI in Architecture';
   }, []);
 
   return (
     <>
-      {showAssembly ? (
-        <RoboticAssembly onClose={() => setShowAssembly(false)} />
-      ) : (
-        <>
-          <Hero onOpenAssembly={() => setShowAssembly(true)} />
+      <Hero onOpenAssembly={() => navigate('/assembly')} />
       <Introduction />
       <KeyTopics />
       <ToolsPlatforms />
       <CaseStudies />
       <BenefitsChallenges />
       <Future />
-          <CallToAction onOpenAssembly={() => setShowAssembly(true)} />
-          <Footer />
-        </>
-      )}
+      <CallToAction onOpenAssembly={() => navigate('/assembly')} />
+      <Footer />
     </>
+  );
+}
+
+function AssemblyPage() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    document.title = '3D Assembly Demo — AI in Architecture';
+  }, []);
+
+  return <RoboticAssembly onClose={() => navigate('/')} />;
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<MainSite />} />
+      <Route path="/assembly" element={<AssemblyPage />} />
+    </Routes>
   );
 }
 

@@ -11,6 +11,7 @@ const RoboticAssembly = ({ onClose }) => {
     const [depth, setDepth] = useState(1.8);
     const [tabScale, setTabScale] = useState(1.0);
     const [isTesting, setIsTesting] = useState(false);
+    const [panelOpen, setPanelOpen] = useState(true);
 
     const stateRef = useRef({
         currentProgress: 0,
@@ -355,49 +356,75 @@ const RoboticAssembly = ({ onClose }) => {
             <div ref={mountRef} id="canvas-container"></div>
 
             <div id="ui-panel">
-                <h1>Synchronous Multi-Robot Assembly</h1>
-                <p>This interactive 3D model visualizes a <span className="highlight">3-part non-sequential interlocking joint</span>.</p>
-                <p>Because of the cyclic mortise-and-tenon geometry, it is <strong>locked by its kinematics</strong>. No single beam can be pulled out independently without colliding with its neighbor. It requires synchronized, simultaneous motion along 3 specific vectors to assemble.</p>
-
-                <div className="controls">
-                    <label htmlFor="assemblySlider">Joint Assembly State</label>
-                    <input
-                        type="range"
-                        id="assemblySlider"
-                        min="0" max="1"
-                        step="0.001"
-                        value={progress}
-                        onChange={handleAssemblySlider}
-                        disabled={isTesting}
-                    />
-                    <button id="toggleBtn" onClick={handleToggleBtn} disabled={isTesting}>{btnText}</button>
-
-                    <hr style={{ border: '0', borderTop: '1px solid #ddd', margin: '15px 0' }} />
-
-                    <label htmlFor="depthSlider">Beam Thickness (cm)</label>
-                    <input
-                        type="range" id="depthSlider" min="0.5" max="5.0" step="0.1"
-                        value={depth} onChange={handleDepthSlider} disabled={isTesting}
-                    />
-
-                    <label htmlFor="tabSlider">Interlock Size (Tab Scale)</label>
-                    <input
-                        type="range" id="tabSlider" min="0.0" max="5.0" step="0.1"
-                        value={tabScale} onChange={handleTabSlider} disabled={isTesting}
-                    />
-
-                    <button id="testBtn" style={{ background: '#d24a3a', marginTop: '10px' }} onClick={handleTestBtn} disabled={isTesting}>
-                        Test Single-Part Removal
+                {/* Header row: title + mobile collapse toggle */}
+                <div className="panel-header">
+                    <h1>Synchronous Multi-Robot Assembly</h1>
+                    <button
+                        className="panel-toggle"
+                        onClick={() => setPanelOpen(o => !o)}
+                        aria-label={panelOpen ? 'Collapse panel' : 'Expand panel'}
+                    >
+                        {panelOpen ? '▲' : '▼'}
                     </button>
                 </div>
 
-                <p className="paper-ref">
-                    <strong>Based on:</strong> Rossi et al. (2023). <br /><em>Robotic Non-Sequential Interlocking Assemblies.</em> Note the simulated ArUco markers on the beams, referencing the automated component location detection used by the robotic arms.
-                </p>
-                {onClose && (
-                    <button className="close-btn" onClick={onClose} disabled={isTesting}>Return to Main Site</button>
-                )}
+                {/* Collapsible body */}
+                <div className={`panel-body${panelOpen ? '' : ' collapsed'}`}>
+                    <p>This interactive 3D model visualizes a <span className="highlight">3-part non-sequential interlocking joint</span>.</p>
+                    <p>Because of the cyclic mortise-and-tenon geometry, it is <strong>locked by its kinematics</strong>. No single beam can be pulled out independently without colliding with its neighbor. It requires synchronized, simultaneous motion along 3 specific vectors to assemble.</p>
+
+                    <div className="controls">
+                        <label htmlFor="assemblySlider">Joint Assembly State</label>
+                        <input
+                            type="range"
+                            id="assemblySlider"
+                            min="0" max="1"
+                            step="0.001"
+                            value={progress}
+                            onChange={handleAssemblySlider}
+                            disabled={isTesting}
+                        />
+                        <button id="toggleBtn" onClick={handleToggleBtn} disabled={isTesting}>{btnText}</button>
+
+                        <hr style={{ border: '0', borderTop: '1px solid #ddd', margin: '15px 0' }} />
+
+                        <label htmlFor="depthSlider">Beam Thickness (cm)</label>
+                        <input
+                            type="range" id="depthSlider" min="0.5" max="5.0" step="0.1"
+                            value={depth} onChange={handleDepthSlider} disabled={isTesting}
+                        />
+
+                        <label htmlFor="tabSlider">Interlock Size (Tab Scale)</label>
+                        <input
+                            type="range" id="tabSlider" min="0.0" max="5.0" step="0.1"
+                            value={tabScale} onChange={handleTabSlider} disabled={isTesting}
+                        />
+
+                        <button id="testBtn" style={{ background: '#d24a3a', marginTop: '10px' }} onClick={handleTestBtn} disabled={isTesting}>
+                            Test Single-Part Removal
+                        </button>
+                    </div>
+
+                    <p className="paper-ref">
+                        <strong>Based on:</strong> Rossi et al. (2023). <br /><em>Robotic Non-Sequential Interlocking Assemblies.</em> Note the simulated ArUco markers on the beams, referencing the automated component location detection used by the robotic arms.
+                    </p>
+                    {onClose && (
+                        <button className="close-btn" onClick={onClose} disabled={isTesting}>Return to Main Site</button>
+                    )}
+                </div>
             </div>
+
+            {/* Floating animate button – mobile only, visible when panel is collapsed */}
+            {!panelOpen && (
+                <button
+                    className="fab-animate"
+                    onClick={handleToggleBtn}
+                    disabled={isTesting}
+                    aria-label="Toggle animation"
+                >
+                    {stateRef.current.targetProgress > 0.5 ? '◼ Assemble' : '▶ Animate'}
+                </button>
+            )}
         </div>
     );
 };
