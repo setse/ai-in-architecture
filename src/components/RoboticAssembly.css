@@ -77,7 +77,7 @@
 .robotic-assembly-page .hint-bubble {
     position: fixed;
     top: 80px;
-    left: 20px;
+    left: 120px;
     background: #d28c3a;
     color: #fff;
     font-size: 0.82rem;
@@ -95,7 +95,8 @@
     content: '';
     position: absolute;
     top: -7px;
-    left: -24px;
+    right: 24px;
+    left: auto;
     border-left: 7px solid transparent;
     border-right: 7px solid transparent;
     border-bottom: 7px solid #d28c3a;
