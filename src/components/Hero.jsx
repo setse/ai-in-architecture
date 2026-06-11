@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 import React, { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, MeshDistortMaterial, Float } from '@react-three/drei';
@@ -32,7 +32,7 @@ function InteractiveCube() {
   );
 }
 
-export default function Hero({ onOpenAssembly }) {
+export default function Hero({ onOpenAssembly, onOpenLibrary }) {
   return (
     <header className="container" style={{
       minHeight: '100vh',
@@ -57,7 +57,7 @@ export default function Hero({ onOpenAssembly }) {
         }}
       ></div>
 
-      <motion.div 
+      <Motion.div 
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
@@ -78,17 +78,25 @@ export default function Hero({ onOpenAssembly }) {
             Explore AI Workflows <ArrowRight size={20} />
           </button>
           {onOpenAssembly && (
-            <button 
-              className="cta-button secondary" 
+            <button
+              className="cta-button secondary"
               onClick={onOpenAssembly}
             >
               View 3D Assembly Demo
             </button>
           )}
+          {onOpenLibrary && (
+            <button
+              className="cta-button secondary"
+              onClick={onOpenLibrary}
+            >
+              Project Library
+            </button>
+          )}
         </div>
-      </motion.div>
+      </Motion.div>
 
-      <motion.div 
+      <Motion.div 
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3, duration: 1, ease: "easeOut" }}
@@ -101,7 +109,7 @@ export default function Hero({ onOpenAssembly }) {
           <InteractiveCube />
           <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1} />
         </Canvas>
-      </motion.div>
+      </Motion.div>
     </header>
   );
 }

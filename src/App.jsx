@@ -13,6 +13,7 @@ import Future from './components/Future';
 import CallToAction from './components/CallToAction';
 import Footer from './components/Footer';
 import RoboticAssembly from './components/RoboticAssembly';
+import ProjectLibrary from './components/ProjectLibrary';
 
 function MainSite() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function MainSite() {
 
   return (
     <>
-      <Hero onOpenAssembly={() => navigate('/assembly')} />
+      <Hero onOpenAssembly={() => navigate('/assembly')} onOpenLibrary={() => navigate('/library')} />
       <Introduction />
       <KeyTopics />
       <ToolsPlatforms />
@@ -44,11 +45,21 @@ function AssemblyPage() {
   return <RoboticAssembly onClose={() => navigate('/')} />;
 }
 
+function LibraryPage() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    document.title = 'Project Library — AI in Architecture';
+  }, []);
+
+  return <ProjectLibrary onBack={() => navigate('/')} />;
+}
+
 function App() {
   return (
     <Routes>
       <Route path="/" element={<MainSite />} />
       <Route path="/assembly" element={<AssemblyPage />} />
+      <Route path="/library" element={<LibraryPage />} />
     </Routes>
   );
 }
